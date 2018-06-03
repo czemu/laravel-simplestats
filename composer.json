@@ -1,0 +1,31 @@
+{
+    "name": "czemu/simplestats",
+    "description": "Simple statistics for Laravel.",
+    "require": {
+        "php": "^7.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Czemu\\Simplestats\\": "src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Czemu\\Simplestats\\SimplestatsServiceProvider"
+            ],
+            "aliases": {
+                "Simplestats": "Czemu\\Simplestats\\Facades\\Simplestats"
+            }
+        }
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Paweł Dymek",
+            "email": "pawel.dymek@gmail.com",
+            "homepage": "https://paweldymek.com/"
+        }
+    ],
+    "minimum-stability": "dev"
+}

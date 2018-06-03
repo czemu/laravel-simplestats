@@ -1,0 +1,37 @@
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class CreateSimplestatsCounterDaysTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        if ( ! Schema::hasTable('simpletats_counter_days'))
+        {
+            Schema::create('simplestats_counter_days', function (Blueprint $table) {
+                $table->increments('id');
+                $table->integer('counter_id')->unsigned()->default(0);
+                $table->integer('sum')->unsigned()->default(0);
+                $table->date('day');
+                $table->timestamps();
+            });
+        }
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('simplestats_counter_days');
+    }
+}
