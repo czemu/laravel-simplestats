@@ -20,6 +20,7 @@
         }
     },
     "license": "MIT",
+    "keywords": ["laravel", "simplestats", "stats", "statistics"],
     "authors": [
         {
             "name": "Paweł Dymek",
