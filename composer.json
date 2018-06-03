@@ -1,6 +1,15 @@
 {
-    "name": "czemu/simplestats",
+    "name": "czemu/laravel-simplestats",
     "description": "Simple statistics for Laravel.",
+    "license": "MIT",
+    "keywords": ["laravel", "simplestats", "stats", "statistics"],
+    "authors": [
+        {
+            "name": "Paweł Dymek",
+            "email": "pawel.dymek@gmail.com",
+            "homepage": "https://paweldymek.com/"
+        }
+    ],
     "require": {
         "php": "^7.1"
     },
@@ -19,14 +28,5 @@
             }
         }
     },
-    "license": "MIT",
-    "keywords": ["laravel", "simplestats", "stats", "statistics"],
-    "authors": [
-        {
-            "name": "Paweł Dymek",
-            "email": "pawel.dymek@gmail.com",
-            "homepage": "https://paweldymek.com/"
-        }
-    ],
     "minimum-stability": "dev"
 }
