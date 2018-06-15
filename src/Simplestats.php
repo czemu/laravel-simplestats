@@ -2,11 +2,36 @@
 
 namespace Czemu\Simplestats;
 
+use Illuminate\Http\Request;
+use Illuminate\Cookie\CookieJar;
 use Czemu\Simplestats\Models\Counter;
 use Czemu\Simplestats\Models\Counter\Day;
 
 class Simplestats
 {
+    /**
+    * @var \Illuminate\Http\Request
+    */
+    protected $request;
+
+    /**
+    * @var \Illuminate\Cookie\CookieJar
+    */
+    protected $cookie;
+
+    /**
+    * Create a new Simplestats instance.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @param  \Illuminate\Cookie\CookieJar  $cookie
+    * @return void
+    */
+    public function __construct(Request $request, CookieJar $cookie)
+    {
+       $this->request = $request;
+       $this->cookie = $cookie;
+    }
+
     /**
     * Gets statistics for an item.
     *
@@ -15,7 +40,7 @@ class Simplestats
     * @param    mixed   $date       one day (YYYY-MM-DD) or date range (['YYYY-MM-DD', 'YYYY-MM-DD'])
     * @return   int
     */
-    public static function get($name, $item_id, $date = NULL)
+    public function get($name, $item_id, $date = NULL)
     {
         $counter = Counter::where('item_id', $item_id)
             ->where('name', $name)
@@ -48,7 +73,7 @@ class Simplestats
     * @param    bool    $unique
     * @return   array
     */
-    public static function update($name, $item_id, $unique = FALSE)
+    public function update($name, $item_id, $unique = FALSE)
     {
         $counter = Counter::firstOrNew([
             'name' => $name,
@@ -63,15 +88,16 @@ class Simplestats
             'day' => date('Y-m-d')
         ]);
 
-        if ( ! $unique OR ($unique AND ! isset($COOKIE[$name.'_'.$item_id])))
+        $cookie_name = $name.'_'.$item_id;
+
+        if ( ! $unique OR ($unique AND ! $this->request->hasCookie($cookie_name)))
         {
             $day->sum += 1;
             $day->save();
 
             if ($unique)
             {
-                unset($_COOKIE[$name.'_'.$item_id]);
-                setcookie($name.'_'.$item_id, true, time() + config('simplestats.unique'));
+                $cookie = $this->cookie->queue($cookie_name, '1', config('simplestats.unique'));
             }
         }
 

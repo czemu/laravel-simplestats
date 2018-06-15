@@ -37,8 +37,8 @@ class SimplestatsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('simplestats', function() {
-            return new \Czemu\Simplestats\Simplestats;
+        $this->app->singleton('simplestats', function($app) {
+            return new \Czemu\Simplestats\Simplestats($app['request'], $app['cookie']);
         });
     }
 }
